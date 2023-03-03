@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +29,14 @@ public class ProductController {
 
         return ResponseEntity.ok(optionalProduct.get());
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> products = productService.findAllProducts();
+
+        return ResponseEntity.ok(products);
+    }
+
 
 
 }

@@ -6,6 +6,8 @@ import com.poolstore.quickclean.models.Product;
 import com.poolstore.quickclean.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +28,13 @@ public class ProductService {
            throw new NotFoundException("Employee Not Found for ID value: "+ id);
         }
         return productRepository.findById((long) id);
+    }
+
+    public List<Product> findAllProducts(){
+        List<Product> products = new ArrayList<>();
+
+        productRepository.findAll().forEach(products::add);
+
+        return products;
     }
 }
