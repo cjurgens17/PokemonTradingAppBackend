@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class AuthService {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
 
-    public UserService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
-    //Create custom methods once we get around to testing CRUD and find a need for actions outside of crudrepository.
-
     public Optional<User> findByCredentials(String email, String password){
-        return userRepository.findByEmailAndPassword(email,password);
+        return userService.findByCredentials(email,password);
     }
 }

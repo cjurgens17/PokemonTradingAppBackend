@@ -2,6 +2,7 @@ package com.poolstore.quickclean.bootstrap;
 
 
 import com.poolstore.quickclean.models.Product;
+import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.repository.ProductRepository;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
@@ -24,6 +25,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         getProducts();
+        getUsers();
     }
 
 
@@ -66,5 +68,30 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
         productRepository.save(pump);
 
+    }
+    @Transactional
+    private void getUsers(){
+
+        User john = new User();
+        john.setFirstname("John");
+        john.setLastName("Michaels");
+        john.setAdmin(false);
+        john.setId(1L);
+        john.setEmail("John@example.com");
+        john.setPassword("password");
+        john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
+
+        userRepository.save(john);
+
+        User mike = new User();
+        john.setFirstname("Mike");
+        john.setLastName("Myers");
+        john.setAdmin(true);
+        john.setId(2L);
+        john.setEmail("Mike@example.com");
+        john.setPassword("password");
+        john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
+
+        userRepository.save(mike);
     }
 }
