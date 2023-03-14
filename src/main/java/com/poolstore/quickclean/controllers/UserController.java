@@ -2,6 +2,7 @@ package com.poolstore.quickclean.controllers;
 
 
 import com.poolstore.quickclean.dtos.RegisterRequest;
+import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,4 @@ public class UserController {
          userService.save(createUser);
          return ResponseEntity.ok().build();
         }
-
 }
