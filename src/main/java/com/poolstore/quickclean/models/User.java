@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,5 +36,14 @@ public class User extends BaseEntity {
 
     @Column(name="admin")
     private Boolean admin;
+
+    @Column(name="phone_number")
+    private String phoneNumber;
+
+    @Column(name="birthdate")
+    private Date birthDate;
+
+    @Column(name="username")
+    private String username;
 
 }
