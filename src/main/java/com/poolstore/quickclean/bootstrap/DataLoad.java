@@ -1,6 +1,7 @@
 package com.poolstore.quickclean.bootstrap;
 
 
+import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.Product;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.repository.ProductRepository;
@@ -80,17 +81,18 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setEmail("John@example.com");
         john.setPassword("password");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
+        john.getPokeIndex().add(new Pokemon());
 
         userRepository.save(john);
 
         User mike = new User();
-        john.setFirstname("Mike");
-        john.setLastName("Myers");
-        john.setAdmin(true);
-        john.setId(2L);
-        john.setEmail("Mike@example.com");
-        john.setPassword("password");
-        john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
+        mike.setFirstname("Mike");
+        mike.setLastName("Myers");
+        mike.setAdmin(true);
+        mike.setId(2L);
+        mike.setEmail("Mike@example.com");
+        mike.setPassword("password");
+        mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
 
         userRepository.save(mike);
     }

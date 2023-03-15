@@ -1,10 +1,7 @@
 package com.poolstore.quickclean.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Pokemon extends BaseEntity {
 
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
     @Column(name="name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name="weight")
     private int weight;
