@@ -26,6 +26,7 @@ public class PokemonController {
         poke.setName(pokemon.getName());
         poke.setWeight(pokemon.getWeight());
         poke.setIndex(pokemon.getIndex());
+        poke.setAbilities(pokemon.getAbilities());
 
         pokemonService.savePokemon(poke);
         return ResponseEntity.ok().build();
