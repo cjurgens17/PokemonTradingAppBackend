@@ -1,9 +1,11 @@
 package com.poolstore.quickclean.bootstrap;
 
 
+import com.poolstore.quickclean.models.PokeIndex;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.Product;
 import com.poolstore.quickclean.models.User;
+import com.poolstore.quickclean.repository.PokeIndexRepository;
 import com.poolstore.quickclean.repository.ProductRepository;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
@@ -11,15 +13,19 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Component
 public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final PokeIndexRepository pokeIndexRepository;
 
-    public DataLoad(ProductRepository productRepository, UserRepository userRepository) {
+    public DataLoad(ProductRepository productRepository, UserRepository userRepository, PokeIndexRepository pokeIndexRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.pokeIndexRepository = pokeIndexRepository;
     }
 
 
@@ -81,7 +87,10 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setEmail("John@example.com");
         john.setPassword("password");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
-        john.getPokeIndex().add(new Pokemon());
+        PokeIndex index1 = new PokeIndex(new ArrayList<>(), new ArrayList<>());
+        pokeIndexRepository.save(index1);
+        index1.getPokemonList().add(new Pokemon());
+        john.setPokeIndex(index1);
 
         userRepository.save(john);
 

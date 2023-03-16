@@ -56,8 +56,7 @@ public class UserController {
 
            if(updateUser.isPresent()) {
                User user = updateUser.get();
-               Hibernate.initialize(user.getPokeIndex());
-               user.getPokeIndex().add(addPokemon.getPokemon());
+               user.getPokeIndex().getPokemonList().add(newPoke);
            }else{
                throw new NotFoundException("User does not exist");
            }

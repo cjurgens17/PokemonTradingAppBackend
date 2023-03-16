@@ -20,10 +20,6 @@ public class Pokemon extends BaseEntity {
     @Column(name="name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(name="weight")
     private int weight;
 
@@ -44,5 +40,9 @@ public class Pokemon extends BaseEntity {
 
     @Column(name="baseStat")
     private List<Integer> baseStat = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "poke_index_id")
+    private PokeIndex pokeIndex;
 
 }

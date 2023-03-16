@@ -47,9 +47,9 @@ public class User extends BaseEntity {
     @Column(name="username")
     private String username;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @Column(name = "poke_index")
-    private List<Pokemon> pokeIndex = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name="poke_index_id")
+    private PokeIndex pokeIndex;
 
 
 }
