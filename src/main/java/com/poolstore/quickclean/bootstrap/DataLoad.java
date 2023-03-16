@@ -1,11 +1,9 @@
 package com.poolstore.quickclean.bootstrap;
 
 
-import com.poolstore.quickclean.models.PokeIndex;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.Product;
 import com.poolstore.quickclean.models.User;
-import com.poolstore.quickclean.repository.PokeIndexRepository;
 import com.poolstore.quickclean.repository.ProductRepository;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
@@ -13,19 +11,16 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @Component
 public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-    private final PokeIndexRepository pokeIndexRepository;
 
-    public DataLoad(ProductRepository productRepository, UserRepository userRepository, PokeIndexRepository pokeIndexRepository) {
+
+    public DataLoad(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
-        this.pokeIndexRepository = pokeIndexRepository;
     }
 
 
@@ -67,7 +62,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         productRepository.save(filter);
 
         Product pump = new Product();
-        pump.setId(1l);
+        pump.setId(1L);
         pump.setName("Hayward Super-pump 1.5HP");
         pump.setPrice(599.99d);
         pump.setQuantity(10);
@@ -87,10 +82,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setEmail("John@example.com");
         john.setPassword("password");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
-        PokeIndex index1 = new PokeIndex(new ArrayList<>(), new ArrayList<>());
-        pokeIndexRepository.save(index1);
-        index1.getPokemonList().add(new Pokemon());
-        john.setPokeIndex(index1);
+        john.getUserPokemon().add(new Pokemon());
 
         userRepository.save(john);
 
