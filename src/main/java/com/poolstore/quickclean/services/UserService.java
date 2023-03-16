@@ -23,8 +23,8 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email,password);
     }
 
-    public User save(User user){
-        return userRepository.save(user);
+    public void save(User user){
+        userRepository.save(user);
     }
 
     public Optional<User> findUserById(Long id){
