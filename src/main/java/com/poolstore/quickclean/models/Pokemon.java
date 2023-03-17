@@ -42,7 +42,7 @@ public class Pokemon extends BaseEntity {
     private List<Integer> baseStat = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
 }

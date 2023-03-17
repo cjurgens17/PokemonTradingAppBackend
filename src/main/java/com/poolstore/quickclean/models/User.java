@@ -1,7 +1,6 @@
 package com.poolstore.quickclean.models;
 
 
-import com.poolstore.quickclean.converters.PokemonArrayConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,10 +48,10 @@ public class User extends BaseEntity {
     @Column(name="username")
     private String username;
 
-    @Convert(converter = PokemonArrayConverter.class)
-    @Column(name="user_pokemon")
-    @Lob
+    @Column(name = "pokemon")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pokemon> userPokemon = new ArrayList<>();
+
 
 
 
