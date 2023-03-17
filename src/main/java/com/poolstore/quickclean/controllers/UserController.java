@@ -5,12 +5,11 @@ import com.poolstore.quickclean.dtos.RegisterRequest;
 import com.poolstore.quickclean.exceptions.NotFoundException;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.User;
+import com.poolstore.quickclean.services.PokemonService;
 import com.poolstore.quickclean.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,10 +18,12 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final PokemonService pokemonService;
 
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PokemonService pokemonService) {
         this.userService = userService;
+        this.pokemonService = pokemonService;
     }
 
 
@@ -43,23 +44,29 @@ public class UserController {
          return ResponseEntity.ok().build();
         }
 
-        //make sure to change put to post on the front end
+
 
         @PostMapping({"/{id}/addPokemon"})
         public ResponseEntity<User> updatePokemon(@PathVariable Long id , @RequestBody Pokemon pokemon){
             System.out.println("In the addPokemon method in the UserController");
            Optional<User> updateUser = userService.findUserById(id);
+
+
            Pokemon newPoke = new Pokemon();
            newPoke.setAbilities(pokemon.getAbilities());
            newPoke.setName(pokemon.getName());
            newPoke.setBackImage(pokemon.getBackImage());
            newPoke.setImage(pokemon.getImage());
            newPoke.setIndex(pokemon.getIndex());
+           pokemonService.savePokemon(newPoke);
+
+
 
            if(updateUser.isPresent()) {
+               System.out.println("User is present");
                User user = updateUser.get();
-               List<Pokemon> pokemonList = user.getUserPokemon();
-               pokemonList.add(newPoke);
+               user.getUserPokemon().add(newPoke);
+//               userService.updateUserPokemon(id,user.getUserPokemon());
                userService.save(user);
 
            }else{

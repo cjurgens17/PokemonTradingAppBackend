@@ -1,5 +1,6 @@
 package com.poolstore.quickclean.models;
 
+
 import com.poolstore.quickclean.converters.PokemonArrayConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -50,7 +51,10 @@ public class User extends BaseEntity {
 
     @Convert(converter = PokemonArrayConverter.class)
     @Column(name="user_pokemon")
+    @Lob
     private List<Pokemon> userPokemon = new ArrayList<>();
+
+
 
 
 }

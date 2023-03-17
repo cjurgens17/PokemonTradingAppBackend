@@ -1,10 +1,12 @@
 package com.poolstore.quickclean.services;
 
 
+import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +31,9 @@ public class UserService {
 
     public Optional<User> findUserById(Long id){
       return userRepository.findById(id);
+    }
+
+    public void updateUserPokemon(Long id, List<Pokemon> pokemon){
+        userRepository.updatePokemonList(id,pokemon);
     }
 }

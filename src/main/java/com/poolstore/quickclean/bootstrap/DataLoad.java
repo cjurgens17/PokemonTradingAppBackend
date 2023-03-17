@@ -4,6 +4,7 @@ package com.poolstore.quickclean.bootstrap;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.Product;
 import com.poolstore.quickclean.models.User;
+import com.poolstore.quickclean.repository.PokemonRepository;
 import com.poolstore.quickclean.repository.ProductRepository;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
@@ -16,18 +17,23 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final PokemonRepository pokemonRepository;
 
 
-    public DataLoad(ProductRepository productRepository, UserRepository userRepository) {
+    public DataLoad(ProductRepository productRepository, UserRepository userRepository, PokemonRepository pokemonRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.pokemonRepository = pokemonRepository;
     }
 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
+        getPokemon();
         getProducts();
         getUsers();
+
     }
 
 
@@ -94,7 +100,18 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         mike.setEmail("Mike@example.com");
         mike.setPassword("password");
         mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
+        mike.getUserPokemon().add(new Pokemon());
 
         userRepository.save(mike);
+    }
+    @Transactional
+    public void getPokemon(){
+
+        Pokemon pickachu = new Pokemon();
+        pickachu.setName("Pickachu");
+        pickachu.setId(1L);
+
+        pokemonRepository.save(pickachu);
+
     }
 }
