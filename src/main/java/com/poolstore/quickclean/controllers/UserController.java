@@ -1,6 +1,7 @@
 package com.poolstore.quickclean.controllers;
 
 
+import com.poolstore.quickclean.dtos.LoginRequest;
 import com.poolstore.quickclean.dtos.RegisterRequest;
 import com.poolstore.quickclean.exceptions.NotFoundException;
 import com.poolstore.quickclean.models.Pokemon;
@@ -38,5 +39,18 @@ public class UserController {
 
          userService.save(createUser);
          return ResponseEntity.ok().build();
+        }
+
+        @PostMapping({"/login"})
+        public ResponseEntity<User> userLogin(@RequestBody LoginRequest loginRequest){
+            Optional<User> user = userService.findByCredentials(loginRequest.getUsername(), loginRequest.getPassword());
+            System.out.println("Username: " + loginRequest.getUsername());
+            System.out.println("password: " + loginRequest.getPassword());
+
+            if(user.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            return ResponseEntity.ok(user.get());
         }
 }

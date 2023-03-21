@@ -87,6 +87,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setId(1L);
         john.setEmail("John@example.com");
         john.setPassword("password");
+        john.setUsername("john17");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
         john.getUserPokemon().add(new Pokemon());
 
@@ -99,6 +100,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         mike.setId(2L);
         mike.setEmail("Mike@example.com");
         mike.setPassword("password");
+        mike.setUsername("mike17");
         mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
         mike.getUserPokemon().add(new Pokemon());
 

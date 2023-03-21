@@ -21,8 +21,8 @@ public class UserService {
 
     //Create custom methods once we get around to testing CRUD and find a need for actions outside of crudrepository.
 
-    public Optional<User> findByCredentials(String email, String password){
-        return userRepository.findByEmailAndPassword(email,password);
+    public Optional<User> findByCredentials(String username, String password){
+        return userRepository.findByUsernameAndPassword(username,password);
     }
 
     public void save(User user){

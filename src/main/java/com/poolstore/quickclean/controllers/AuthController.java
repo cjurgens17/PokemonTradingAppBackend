@@ -24,7 +24,7 @@ public class AuthController {
 
     @PostMapping({"/login"})
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest){
-        Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
+        Optional<User> optional = authService.findByCredentials(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (!optional.isPresent()) {
             return ResponseEntity.badRequest().build();

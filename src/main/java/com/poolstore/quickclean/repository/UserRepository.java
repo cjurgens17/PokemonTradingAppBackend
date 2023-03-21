@@ -5,7 +5,6 @@ import com.poolstore.quickclean.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
 @Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByEmailAndPassword(String email, String password);
+    Optional<User> findByUsernameAndPassword(String username, String password);
     @Modifying
     @Query("UPDATE Users u SET u.user_pokemon = ?2 WHERE u.id = ?1")
      default void updatePokemonList(Long id, List<Pokemon> pokemon){
