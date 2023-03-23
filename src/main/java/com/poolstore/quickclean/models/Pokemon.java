@@ -1,6 +1,7 @@
 package com.poolstore.quickclean.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +42,7 @@ public class Pokemon extends BaseEntity {
     @Column(name="baseStat")
     private List<Integer> baseStat = new ArrayList<>();
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

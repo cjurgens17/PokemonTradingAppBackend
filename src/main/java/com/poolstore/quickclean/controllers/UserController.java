@@ -3,7 +3,6 @@ package com.poolstore.quickclean.controllers;
 
 import com.poolstore.quickclean.dtos.LoginRequest;
 import com.poolstore.quickclean.dtos.RegisterRequest;
-import com.poolstore.quickclean.exceptions.NotFoundException;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.services.PokemonService;
@@ -11,6 +10,7 @@ import com.poolstore.quickclean.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,9 +19,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final PokemonService pokemonService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PokemonService pokemonService) {
         this.userService = userService;
+        this.pokemonService = pokemonService;
     }
 
         @PostMapping({"/new"})
@@ -52,5 +54,21 @@ public class UserController {
             }
 
             return ResponseEntity.ok(user.get());
+        }
+
+        @GetMapping({"/{id}/userPokemon"})
+        public ResponseEntity<List<Pokemon>> getUserPokemon(@PathVariable Long id){
+
+        Optional<User> user = userService.findUserById(id);
+
+        if(user.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user1 = user.get();
+
+        List<Pokemon> pokemon = pokemonService.getUserPokemon(user1);
+
+        return ResponseEntity.ok(pokemon);
         }
 }
