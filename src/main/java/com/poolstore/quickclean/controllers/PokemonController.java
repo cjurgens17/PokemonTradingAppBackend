@@ -61,6 +61,7 @@ public class PokemonController {
         newPoke.setImage(pokemon.getImage());
         newPoke.setIndex(pokemon.getIndex());
         newPoke.setUser(user);
+        newPoke.setWeight(pokemon.getWeight());
         System.out.println("pokemon: " + newPoke);
         pokemonService.savePokemon(newPoke);
 
