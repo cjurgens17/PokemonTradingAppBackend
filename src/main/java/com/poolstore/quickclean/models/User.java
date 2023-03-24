@@ -11,7 +11,6 @@ import lombok.Setter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 
 @Entity
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 public class User extends BaseEntity {
 
     @Column(name="first_name")
-    private String firstname;
+    private String firstName;
 
     @Column(name="last_name")
     private String lastName;

@@ -31,7 +31,7 @@ public class UserController {
          System.out.println("In the create User controller method");
          User createUser = new User();
 
-         createUser.setFirstname(registerRequest.getFirstName());
+         createUser.setFirstName(registerRequest.getFirstName());
          createUser.setLastName(registerRequest.getLastName());
          createUser.setPhoneNumber(registerRequest.getPhoneNumber());
          createUser.setEmail(registerRequest.getEmail());
@@ -71,4 +71,20 @@ public class UserController {
 
         return ResponseEntity.ok(pokemon);
         }
+
+        @GetMapping({"/{id}/userInfo"})
+        public ResponseEntity<User> getUserInfo(@PathVariable Long id){
+
+            Optional<User> user = userService.findUserById(id);
+
+            if(user.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            User user1 = user.get();
+            System.out.println("in get user info controller method");
+
+            return ResponseEntity.ok(user1);
+        }
+
 }

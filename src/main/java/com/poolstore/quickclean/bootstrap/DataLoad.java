@@ -81,7 +81,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
     private void getUsers(){
 
         User john = new User();
-        john.setFirstname("John");
+        john.setFirstName("John");
         john.setLastName("Michaels");
         john.setAdmin(false);
         john.setId(1L);
@@ -94,7 +94,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         userRepository.save(john);
 
         User mike = new User();
-        mike.setFirstname("Mike");
+        mike.setFirstName("Mike");
         mike.setLastName("Myers");
         mike.setAdmin(true);
         mike.setId(2L);
