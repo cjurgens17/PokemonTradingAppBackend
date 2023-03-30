@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 
 @Service
 public class UserService {
@@ -35,5 +36,9 @@ public class UserService {
 
     public void updateUserPokemon(Long id, List<Pokemon> pokemon){
         userRepository.updatePokemonList(id,pokemon);
+    }
+
+    public Optional<User> findByCredentials(String username){
+        return userRepository.findByUsername(username);
     }
 }

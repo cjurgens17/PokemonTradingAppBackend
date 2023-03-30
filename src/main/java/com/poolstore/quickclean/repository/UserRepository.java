@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE Users u SET u.user_pokemon = ?2 WHERE u.id = ?1")
      default void updatePokemonList(Long id, List<Pokemon> pokemon){
-
     }
+
+    Optional<User> findByUsername(String username);
 }

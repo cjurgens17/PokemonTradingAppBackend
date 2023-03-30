@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     @Column(name="birthdate")
     private Date birthDate;
 
-    @Column(name="username")
+    @Column(name="username", unique = true)
     private String username;
 
     @JsonIgnore

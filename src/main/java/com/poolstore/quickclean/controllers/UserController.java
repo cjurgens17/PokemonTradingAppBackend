@@ -87,4 +87,18 @@ public class UserController {
             return ResponseEntity.ok(user1);
         }
 
+        @GetMapping({"/{username}"})
+        public ResponseEntity<User> getUserByUsername(@PathVariable String username){
+            Optional<User> user = userService.findByCredentials(username);
+
+            if(user.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            User user1 = user.get();
+            System.out.println("In the get by Username method");
+
+            return ResponseEntity.ok(user1);
+        }
+
 }
