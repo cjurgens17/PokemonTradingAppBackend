@@ -101,4 +101,14 @@ public class UserController {
             return ResponseEntity.ok(user1);
         }
 
+        @GetMapping({"/getAllUsers"})
+        public ResponseEntity<List<User>> getAllUsers() {
+            List<User> users = userService.getUsers();
+
+            if (users.isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok(users);
+        }
+
 }

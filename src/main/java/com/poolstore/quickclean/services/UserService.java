@@ -41,4 +41,8 @@ public class UserService {
     public Optional<User> findByCredentials(String username){
         return userRepository.findByUsername(username);
     }
+
+    public List<User> getUsers(){
+        return userRepository.findAll();
+    }
 }
