@@ -53,6 +53,11 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pokemon> userPokemon = new ArrayList<>();
 
+    @JsonIgnore
+    @Column(name="inbox")
+    @OneToMany
+    private List<Message> inbox = new ArrayList<>();
+
 
 
 
