@@ -55,7 +55,7 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     @Column(name="inbox")
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> inbox = new ArrayList<>();
 
 
