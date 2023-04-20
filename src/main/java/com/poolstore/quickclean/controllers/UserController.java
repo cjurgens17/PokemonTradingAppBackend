@@ -3,8 +3,11 @@ package com.poolstore.quickclean.controllers;
 
 import com.poolstore.quickclean.dtos.LoginRequest;
 import com.poolstore.quickclean.dtos.RegisterRequest;
+import com.poolstore.quickclean.exceptions.NotFoundException;
+import com.poolstore.quickclean.models.Message;
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.User;
+import com.poolstore.quickclean.services.MessageService;
 import com.poolstore.quickclean.services.PokemonService;
 import com.poolstore.quickclean.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +23,12 @@ public class UserController {
 
     private final UserService userService;
     private final PokemonService pokemonService;
+    private final MessageService messageService;
 
-    public UserController(UserService userService, PokemonService pokemonService) {
+    public UserController(UserService userService, PokemonService pokemonService, MessageService messageService) {
         this.userService = userService;
         this.pokemonService = pokemonService;
+        this.messageService = messageService;
     }
 
         @PostMapping({"/new"})
@@ -109,6 +114,31 @@ public class UserController {
                 return ResponseEntity.badRequest().build();
             }
             return ResponseEntity.ok(users);
+        }
+
+        @PostMapping({"/{username}/addMessage"})
+        public ResponseEntity<User> addMessage(@PathVariable String username, @RequestBody Message message){
+            System.out.println("In add message UserController");
+            Optional<User> updateUser = userService.findByCredentials(username);
+            User user;
+            if(updateUser.isPresent()){
+               user = updateUser.get();
+            }else{
+                throw new NotFoundException("User does not exist");
+            }
+
+            Message newMessage = new Message();
+            newMessage.setText(message.getText());
+            newMessage.setUserPokemon(message.getUserPokemon());
+            newMessage.setTradePokemon(message.getTradePokemon());
+            newMessage.setUsername(message.getUsername());
+            newMessage.setUser(user);
+            messageService.save(newMessage);
+
+            System.out.println(newMessage);
+
+            return ResponseEntity.ok().build();
+
         }
 
 }
