@@ -77,6 +77,23 @@ public class UserController {
         return ResponseEntity.ok(pokemon);
         }
 
+        @GetMapping({"/{id}/userMessages"})
+        public ResponseEntity<List<Message>> getUserMessages(@PathVariable Long id){
+
+        Optional<User> user = userService.findUserById(id);
+
+        if(user.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user1 = user.get();
+
+        List<Message> inbox = messageService.getUserMessages(user1);
+
+        return ResponseEntity.ok(inbox);
+
+        }
+
         @GetMapping({"/{id}/userInfo"})
         public ResponseEntity<User> getUserInfo(@PathVariable Long id){
 
@@ -132,6 +149,9 @@ public class UserController {
             newMessage.setUserPokemon(message.getUserPokemon());
             newMessage.setTradePokemon(message.getTradePokemon());
             newMessage.setUsername(message.getUsername());
+            newMessage.setTradePokemonImage(message.getTradePokemonImage());
+            newMessage.setUserPokemonImage(message.getUserPokemonImage());
+            newMessage.setCurrentUsername(message.getCurrentUsername());
             newMessage.setUser(user);
             messageService.save(newMessage);
 

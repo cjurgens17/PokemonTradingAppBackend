@@ -28,6 +28,15 @@ public class Message extends BaseEntity {
     @Column(name="username")
     private String username;
 
+    @Column(name="tradePokemonImage")
+    private String tradePokemonImage;
+
+    @Column(name="userPokemonImage")
+    private String userPokemonImage;
+
+    @Column(name="currentUsername")
+    private String currentUsername;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
