@@ -161,4 +161,19 @@ public class UserController {
 
         }
 
+        @DeleteMapping({"/deleteMessage"})
+        public ResponseEntity<Message> deleteMessage(@RequestBody Message sentMessage){
+            System.out.println("in the delete Message service   message ID: " + sentMessage.getId());
+            Optional<Message> optMessage = messageService.findMessageById(sentMessage.getId());
+
+            if(optMessage.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            Message deleteMessage = optMessage.get();
+            messageService.deleteMessageById(deleteMessage);
+
+            return ResponseEntity.ok(deleteMessage);
+        }
+
 }

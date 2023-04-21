@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageService {
@@ -37,5 +38,13 @@ public class MessageService {
         });
 
         return inbox;
+    }
+
+    public Optional<Message> findMessageById(Long id){
+        return messageRepository.findById(id);
+    }
+
+    public void deleteMessageById(Message message){
+        messageRepository.deleteById(message.getId());
     }
 }
