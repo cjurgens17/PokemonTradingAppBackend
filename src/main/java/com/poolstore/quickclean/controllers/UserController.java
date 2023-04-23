@@ -176,4 +176,43 @@ public class UserController {
             return ResponseEntity.ok(deleteMessage);
         }
 
+        @PostMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
+        public ResponseEntity<Boolean> checkUsersPokemon(@PathVariable String username, @PathVariable String currentUsername,
+        @PathVariable String userPokemon, @PathVariable String tradePokemon){
+            Optional<User> user1 = userService.findByCredentials(username);
+            Optional<User> user2 = userService.findByCredentials(currentUsername);
+
+            if(user1.isEmpty() || user2.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            User tradeUser1 = user1.get();
+            User tradeUser2 = user2.get();
+
+            // gets users pokemon
+            List<Pokemon> tradeUser1Pokemon = pokemonService.getUserPokemon(tradeUser1);
+            List<Pokemon> tradeUser2Pokemon = pokemonService.getUserPokemon(tradeUser2);
+
+            boolean checkUser1 = false;
+            boolean checkUser2 = false;
+            //checks uers pokemon to see if pokemon are persisted
+            for(Pokemon poke: tradeUser1Pokemon){
+                if(poke.getName().equals(tradePokemon)){
+                    checkUser1 = true;
+                    break;
+                }
+            }
+
+            for(Pokemon poke: tradeUser2Pokemon){
+                if(poke.getName().equals(userPokemon)){
+                    checkUser2 = true;
+                    break;
+                }
+            }
+
+
+           return ResponseEntity.ok(checkUser1 && checkUser2);
+    }
+
+
 }
