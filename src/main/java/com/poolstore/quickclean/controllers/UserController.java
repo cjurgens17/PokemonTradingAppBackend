@@ -176,7 +176,7 @@ public class UserController {
             return ResponseEntity.ok(deleteMessage);
         }
 
-        @PostMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
+        @GetMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
         public ResponseEntity<Boolean> checkUsersPokemon(@PathVariable String username, @PathVariable String currentUsername,
         @PathVariable String userPokemon, @PathVariable String tradePokemon){
             Optional<User> user1 = userService.findByCredentials(username);
