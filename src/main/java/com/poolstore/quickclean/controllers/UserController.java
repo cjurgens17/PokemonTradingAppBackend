@@ -3,6 +3,7 @@ package com.poolstore.quickclean.controllers;
 
 import com.poolstore.quickclean.dtos.LoginRequest;
 import com.poolstore.quickclean.dtos.RegisterRequest;
+import com.poolstore.quickclean.dtos.Trade;
 import com.poolstore.quickclean.exceptions.NotFoundException;
 import com.poolstore.quickclean.models.Message;
 import com.poolstore.quickclean.models.Pokemon;
@@ -195,7 +196,7 @@ public class UserController {
 
             boolean checkUser1 = false;
             boolean checkUser2 = false;
-            //checks uers pokemon to see if pokemon are persisted
+            //checks users pokemon to see if persisted
             for(Pokemon poke: tradeUser1Pokemon){
                 if(poke.getName().equals(tradePokemon)){
                     checkUser1 = true;
@@ -214,5 +215,75 @@ public class UserController {
            return ResponseEntity.ok(checkUser1 && checkUser2);
     }
 
+    @PostMapping({"/tradePokemon"})
+    public ResponseEntity<Boolean> tradePokemon(@RequestBody Trade trade){
+
+        Trade dataTrade = new Trade();
+        dataTrade.setUsername(trade.getUsername());
+        dataTrade.setUserPokemon(trade.getUserPokemon());
+        dataTrade.setCurrentUsername(trade.getCurrentUsername());
+        dataTrade.setTradePokemon(trade.getTradePokemon());
+
+        Optional<User> user1 = userService.findByCredentials(dataTrade.getUsername());
+        Optional<User> user2 = userService.findByCredentials(dataTrade.getCurrentUsername());
+
+        if(user1.isEmpty() || user2.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        User tradeUser1 = user1.get();
+        User tradeUser2 = user2.get();
+
+        boolean trade1 = false;
+        boolean trade2 = false;
+
+        List<Pokemon> tradeUser1Pokemon = pokemonService.getUserPokemon(tradeUser1);
+        List<Pokemon> tradeUser2Pokemon = pokemonService.getUserPokemon(tradeUser2);
+
+
+        for(Pokemon poke: tradeUser1Pokemon){
+            if(poke.getName().equals(dataTrade.getTradePokemon())){
+                tradeUser2Pokemon.add(poke);
+                tradeUser1Pokemon.remove(poke);
+                tradeUser1.setUserPokemon(tradeUser1Pokemon);
+                trade1 = true;
+                break;
+            }
+        }
+
+        //just to test
+        for(Pokemon poke: tradeUser1Pokemon){
+            System.out.println("user 1 Pokemon: "+poke.getName());
+        }
+
+
+
+        for(Pokemon poke: tradeUser2Pokemon){
+            if(poke.getName().equals(dataTrade.getUserPokemon())){
+                tradeUser1Pokemon.add(poke);
+                tradeUser2Pokemon.remove(poke);
+                tradeUser2.setUserPokemon(tradeUser2Pokemon);
+                trade2 = true;
+                break;
+            }
+        }
+
+        //just to test
+        for(Pokemon poke: tradeUser2Pokemon){
+            System.out.println("user 2 Pokemon: "+poke.getName());
+        }
+
+        if(trade1 && trade2){
+            userService.save(tradeUser1);
+            userService.save(tradeUser2);
+        }
+
+
+
+
+
+        return ResponseEntity.ok(trade1 && trade2);
+
+    }
 
 }

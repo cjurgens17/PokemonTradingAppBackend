@@ -39,4 +39,8 @@ public class PokemonService {
 
         return pokemon;
     }
+
+    public void deletePokemon(Pokemon pokemon){
+        pokemonRepository.delete(pokemon);
+    }
 }
