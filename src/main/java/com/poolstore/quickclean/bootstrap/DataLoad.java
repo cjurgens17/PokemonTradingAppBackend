@@ -89,9 +89,11 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setPassword("password");
         john.setUsername("john17");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
-        john.getUserPokemon().add(new Pokemon());
-
         userRepository.save(john);
+        Pokemon charizard = new Pokemon();
+        charizard.setName("charizard");
+        charizard.setUser(john);
+        pokemonRepository.save(charizard);
 
         User mike = new User();
         mike.setFirstName("Mike");
@@ -102,9 +104,11 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         mike.setPassword("password");
         mike.setUsername("mike17");
         mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
-        mike.getUserPokemon().add(new Pokemon());
-
         userRepository.save(mike);
+        Pokemon poke = new Pokemon();
+        poke.setName("butterfree");
+        poke.setUser(mike);
+        pokemonRepository.save(poke);
     }
     @Transactional
     public void getPokemon(){

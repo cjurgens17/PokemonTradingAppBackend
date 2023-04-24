@@ -11,7 +11,11 @@ import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.services.MessageService;
 import com.poolstore.quickclean.services.PokemonService;
 import com.poolstore.quickclean.services.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +25,9 @@ import java.util.Optional;
 @RequestMapping({"user"})
 @CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class UserController {
+
+    @Autowired
+    private EntityManager entityManager;
 
     private final UserService userService;
     private final PokemonService pokemonService;
@@ -216,6 +223,7 @@ public class UserController {
     }
 
     @PostMapping({"/tradePokemon"})
+    @Transactional
     public ResponseEntity<Boolean> tradePokemon(@RequestBody Trade trade){
 
         Trade dataTrade = new Trade();
@@ -234,56 +242,39 @@ public class UserController {
         User tradeUser1 = user1.get();
         User tradeUser2 = user2.get();
 
+
         boolean trade1 = false;
         boolean trade2 = false;
 
-        List<Pokemon> tradeUser1Pokemon = pokemonService.getUserPokemon(tradeUser1);
-        List<Pokemon> tradeUser2Pokemon = pokemonService.getUserPokemon(tradeUser2);
-
+        List<Pokemon> tradeUser1Pokemon = tradeUser1.getUserPokemon();
+        List<Pokemon> tradeUser2Pokemon = tradeUser2.getUserPokemon();
 
         for(Pokemon poke: tradeUser1Pokemon){
             if(poke.getName().equals(dataTrade.getTradePokemon())){
-                tradeUser2Pokemon.add(poke);
-                tradeUser1Pokemon.remove(poke);
-                tradeUser1.setUserPokemon(tradeUser1Pokemon);
+                if(!entityManager.contains(poke)){
+                    poke = entityManager.merge(poke);
+                }
+
+                poke.setUser(tradeUser2);
+                pokemonService.savePokemon(poke);
                 trade1 = true;
                 break;
             }
         }
 
-        //just to test
-        for(Pokemon poke: tradeUser1Pokemon){
-            System.out.println("user 1 Pokemon: "+poke.getName());
-        }
-
-
-
         for(Pokemon poke: tradeUser2Pokemon){
             if(poke.getName().equals(dataTrade.getUserPokemon())){
-                tradeUser1Pokemon.add(poke);
-                tradeUser2Pokemon.remove(poke);
-                tradeUser2.setUserPokemon(tradeUser2Pokemon);
+                if(!entityManager.contains(poke)){
+                    poke = entityManager.merge(poke);
+                }
+
+                poke.setUser(tradeUser1);
+                pokemonService.savePokemon(poke);
                 trade2 = true;
                 break;
             }
         }
 
-        //just to test
-        for(Pokemon poke: tradeUser2Pokemon){
-            System.out.println("user 2 Pokemon: "+poke.getName());
-        }
-
-        if(trade1 && trade2){
-            userService.save(tradeUser1);
-            userService.save(tradeUser2);
-        }
-
-
-
-
-
         return ResponseEntity.ok(trade1 && trade2);
-
     }
-
 }
