@@ -37,6 +37,9 @@ public class Message extends BaseEntity {
     @Column(name="currentUsername")
     private String currentUsername;
 
+    @Column(name = "isTraded")
+    private boolean isTraded;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")

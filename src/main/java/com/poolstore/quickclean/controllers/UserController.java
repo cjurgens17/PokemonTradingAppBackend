@@ -102,6 +102,32 @@ public class UserController {
 
         }
 
+        @PostMapping({"/{username}/updateIsTraded"})
+        public ResponseEntity<Message> updateIsTraded(@RequestBody Message message, @PathVariable String username){
+
+            Optional<User> user = userService.findByCredentials(username);
+            if(user.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+
+            User setMsgUser = user.get();
+
+            Message updateIsTrade = new Message();
+            updateIsTrade.setId(message.getId());
+            updateIsTrade.setTraded(true);
+            updateIsTrade.setText(message.getText());
+            updateIsTrade.setCurrentUsername(message.getCurrentUsername());
+            updateIsTrade.setTradePokemon(message.getTradePokemon());
+            updateIsTrade.setTradePokemonImage(message.getTradePokemonImage());
+            updateIsTrade.setUserPokemon(message.getUserPokemon());
+            updateIsTrade.setUserPokemonImage(message.getUserPokemonImage());
+            updateIsTrade.setUser(setMsgUser);
+            updateIsTrade.setUsername(message.getUsername());
+            messageService.save(updateIsTrade);
+
+            return ResponseEntity.ok(updateIsTrade);
+        }
+
         @GetMapping({"/{id}/userInfo"})
         public ResponseEntity<User> getUserInfo(@PathVariable Long id){
 
@@ -160,17 +186,20 @@ public class UserController {
             newMessage.setTradePokemonImage(message.getTradePokemonImage());
             newMessage.setUserPokemonImage(message.getUserPokemonImage());
             newMessage.setCurrentUsername(message.getCurrentUsername());
+            System.out.println(message.isTraded());
+            newMessage.setTraded(message.isTraded());
+            System.out.println(newMessage.isTraded());
             newMessage.setUser(user);
             messageService.save(newMessage);
 
             System.out.println(newMessage);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(user);
 
         }
 
         @DeleteMapping({"/deleteMessage"})
-        public ResponseEntity<Message> deleteMessage(@RequestBody Message sentMessage){
+        public ResponseEntity<Boolean> deleteMessage(@RequestBody Message sentMessage){
             System.out.println("in the delete Message service   message ID: " + sentMessage.getId());
             Optional<Message> optMessage = messageService.findMessageById(sentMessage.getId());
 
@@ -181,7 +210,7 @@ public class UserController {
             Message deleteMessage = optMessage.get();
             messageService.deleteMessageById(deleteMessage);
 
-            return ResponseEntity.ok(deleteMessage);
+            return ResponseEntity.ok(true);
         }
 
         @GetMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
