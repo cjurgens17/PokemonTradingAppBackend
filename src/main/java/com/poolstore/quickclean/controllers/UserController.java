@@ -51,6 +51,8 @@ public class UserController {
          createUser.setBirthDate(registerRequest.getBirthDate());
          createUser.setPassword(registerRequest.getPassword());
          createUser.setUsername(registerRequest.getUsername());
+         //each user starts with 10 pokeBalls
+         createUser.setPokeBalls(10);
 
          userService.save(createUser);
          return ResponseEntity.ok().build();

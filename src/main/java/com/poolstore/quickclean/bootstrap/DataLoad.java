@@ -3,14 +3,19 @@ package com.poolstore.quickclean.bootstrap;
 
 import com.poolstore.quickclean.models.Pokemon;
 import com.poolstore.quickclean.models.Product;
+import com.poolstore.quickclean.models.Timer;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.repository.PokemonRepository;
 import com.poolstore.quickclean.repository.ProductRepository;
+import com.poolstore.quickclean.repository.TimerRepository;
 import com.poolstore.quickclean.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Component
 public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
@@ -18,12 +23,14 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final PokemonRepository pokemonRepository;
+    private final TimerRepository timerRepository;
 
 
-    public DataLoad(ProductRepository productRepository, UserRepository userRepository, PokemonRepository pokemonRepository) {
+    public DataLoad(ProductRepository productRepository, UserRepository userRepository, PokemonRepository pokemonRepository, TimerRepository timerRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.pokemonRepository = pokemonRepository;
+        this.timerRepository = timerRepository;
     }
 
 
@@ -33,6 +40,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         getPokemon();
         getProducts();
         getUsers();
+        getTimer();
 
     }
 
@@ -119,5 +127,16 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
         pokemonRepository.save(pickachu);
 
+    }
+
+    @Transactional
+    public void getTimer(){
+        Timer timer = new Timer();
+        timer.setId(1L);
+        long epoch = new Date().getTime();
+        Date date = new Date(epoch);
+        timer.setPrevDate(date);
+
+        timerRepository.save(timer);
     }
 }

@@ -48,6 +48,9 @@ public class User extends BaseEntity {
     @Column(name="username", unique = true)
     private String username;
 
+    @Column(name = "pokeBalls")
+    private int pokeBalls;
+
     @JsonIgnore
     @Column(name = "pokemon")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
