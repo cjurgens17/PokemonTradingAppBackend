@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +27,7 @@ public class TimerController {
     }
 
     @PostMapping({"/{id}/updateTimer"})
-    public ResponseEntity<Timer> updateTimer(@PathVariable Long id , @RequestBody Timer timer){
+    public ResponseEntity<Timer> updateTimer(@PathVariable Long id , @RequestParam("date") String stringDate){
 
         Optional<Timer> optTimer = timerService.getTimerById(id);
         if(optTimer.isEmpty()){
@@ -34,7 +36,9 @@ public class TimerController {
 
         Timer timerExists = optTimer.get();
 
-        timerExists.setPrevDate(timer.getPrevDate());
+        Date newDate = Date.from(Instant.parse(stringDate));
+        timerExists.setPrevDate(newDate);
+        System.out.println(timerExists.getPrevDate());
 
         timerService.saveTimer(timerExists);
         return ResponseEntity.ok(timerExists);

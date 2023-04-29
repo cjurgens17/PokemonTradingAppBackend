@@ -14,6 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -133,10 +134,12 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
     public void getTimer(){
         Timer timer = new Timer();
         timer.setId(1L);
-        long epoch = new Date().getTime();
-        Date date = new Date(epoch);
-        timer.setPrevDate(date);
 
+        LocalDate localDate = LocalDate.now();
+        LocalDate minusOneDay = localDate.minusDays(1);
+        Date currentDateMinusOneDay = java.sql.Date.valueOf(minusOneDay);
+        timer.setPrevDate(currentDateMinusOneDay);
+        System.out.println("today minus one day " + currentDateMinusOneDay);
         timerRepository.save(timer);
     }
 }
