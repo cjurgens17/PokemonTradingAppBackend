@@ -44,7 +44,7 @@ public class PokemonController {
     }
 
     @PostMapping({"/{id}/addPokemon"})
-    public ResponseEntity<User> updatePokemon(@PathVariable Long id, @RequestBody Pokemon pokemon) {
+    public ResponseEntity<Pokemon> updatePokemon(@PathVariable Long id, @RequestBody Pokemon pokemon) {
         System.out.println("In the addPokemon method in the UserController");
         Optional<User> updateUser = userService.findUserById(id);
         User user;
@@ -65,6 +65,6 @@ public class PokemonController {
         System.out.println("pokemon: " + newPoke);
         pokemonService.savePokemon(newPoke);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(newPoke);
     }
 }
