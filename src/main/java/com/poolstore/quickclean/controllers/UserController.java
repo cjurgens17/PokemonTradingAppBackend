@@ -105,7 +105,11 @@ public class UserController {
         }
 
         @PostMapping({"/{username}/updateIsTraded"})
-        public ResponseEntity<Message> updateIsTraded(@RequestBody Message message, @PathVariable String username){
+        public ResponseEntity<Message> updateIsTraded(
+                @RequestBody Message message,
+                @PathVariable String username
+        )
+        {
 
             Optional<User> user = userService.findByCredentials(username);
             if(user.isEmpty()){
@@ -170,7 +174,11 @@ public class UserController {
         }
 
         @PostMapping({"/{username}/addMessage"})
-        public ResponseEntity<User> addMessage(@PathVariable String username, @RequestBody Message message){
+        public ResponseEntity<User> addMessage(
+                @PathVariable String username,
+                @RequestBody Message message
+        )
+        {
             System.out.println("In add message UserController");
             Optional<User> updateUser = userService.findByCredentials(username);
             User user;
@@ -216,8 +224,13 @@ public class UserController {
         }
 
         @GetMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
-        public ResponseEntity<Boolean> checkUsersPokemon(@PathVariable String username, @PathVariable String currentUsername,
-        @PathVariable String userPokemon, @PathVariable String tradePokemon){
+        public ResponseEntity<Boolean> checkUsersPokemon(
+                @PathVariable String username,
+                @PathVariable String currentUsername,
+                @PathVariable String userPokemon,
+                @PathVariable String tradePokemon
+        )
+        {
             Optional<User> user1 = userService.findByCredentials(username);
             Optional<User> user2 = userService.findByCredentials(currentUsername);
 

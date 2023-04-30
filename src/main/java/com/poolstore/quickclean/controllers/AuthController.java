@@ -24,12 +24,12 @@ public class AuthController {
 
     @PostMapping({"/login"})
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest){
-        Optional<User> optional = authService.findByCredentials(loginRequest.getUsername(), loginRequest.getPassword());
+        Optional<User> optUser = authService.findByCredentials(loginRequest.getUsername(), loginRequest.getPassword());
 
-        if (!optional.isPresent()) {
+        if (optUser.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(optional.get());
+        return ResponseEntity.ok(optUser.get());
     }
 }

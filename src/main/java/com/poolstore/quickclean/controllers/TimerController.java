@@ -27,7 +27,11 @@ public class TimerController {
     }
 
     @PostMapping({"/{id}/updateTimer"})
-    public ResponseEntity<Timer> updateTimer(@PathVariable Long id , @RequestParam("date") String stringDate){
+    public ResponseEntity<Timer> updateTimer(
+            @PathVariable Long id,
+            @RequestParam("date") String stringDate
+    )
+    {
 
         Optional<Timer> optTimer = timerService.getTimerById(id);
         if(optTimer.isEmpty()){
@@ -58,7 +62,11 @@ public class TimerController {
 
     @PostMapping({"/{id}/addPokeBalls"})
     @Transactional
-    public ResponseEntity<Integer> addPokeBalls(@PathVariable Long id, @RequestBody Integer pokeBalls){
+    public ResponseEntity<Integer> addPokeBalls(
+            @PathVariable Long id,
+            @RequestBody Integer pokeBalls
+    )
+    {
         Optional<User> optUser = userService.findUserById(id);
 
         if(optUser.isEmpty()){
@@ -76,7 +84,11 @@ public class TimerController {
 
     @PostMapping({"/{id}/deletePokeBalls"})
     @Transactional
-    public ResponseEntity<Integer> deletePokeBalls(@PathVariable Long id, @RequestBody Integer pokeBalls){
+    public ResponseEntity<Integer> deletePokeBalls(
+            @PathVariable Long id,
+            @RequestBody Integer pokeBalls
+    )
+    {
         Optional<User> optUser = userService.findUserById(id);
 
         if(optUser.isEmpty()){
