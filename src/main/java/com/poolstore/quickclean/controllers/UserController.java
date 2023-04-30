@@ -308,4 +308,23 @@ public class UserController {
 
         return ResponseEntity.ok(trade1 && trade2);
     }
+    @PostMapping({"/{id}/updateProfilePicture"})
+    @Transactional
+    public ResponseEntity<Boolean> updateProfilePicture(
+            @PathVariable Long id,
+            @RequestParam String profilePicture
+    )
+    {
+     Optional<User> optUser = userService.findUserById(id);
+     if(optUser.isEmpty()){
+         return ResponseEntity.badRequest().build();
+     }
+
+     User user = optUser.get();
+
+     user.setProfilePicture(profilePicture);
+     userService.save(user);
+
+     return ResponseEntity.ok(true);
+    }
 }
