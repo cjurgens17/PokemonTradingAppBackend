@@ -7,17 +7,20 @@ import com.poolstore.quickclean.dtos.Trade;
 import com.poolstore.quickclean.exceptions.NotFoundException;
 import com.poolstore.quickclean.models.Message;
 import com.poolstore.quickclean.models.Pokemon;
+import com.poolstore.quickclean.models.Timer;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.services.MessageService;
 import com.poolstore.quickclean.services.PokemonService;
+import com.poolstore.quickclean.services.TimerService;
 import com.poolstore.quickclean.services.UserService;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,14 +35,17 @@ public class UserController {
     private final UserService userService;
     private final PokemonService pokemonService;
     private final MessageService messageService;
+    private final TimerService timerService;
 
-    public UserController(UserService userService, PokemonService pokemonService, MessageService messageService) {
+    public UserController(UserService userService, PokemonService pokemonService, MessageService messageService, TimerService timerService) {
         this.userService = userService;
         this.pokemonService = pokemonService;
         this.messageService = messageService;
+        this.timerService = timerService;
     }
 
         @PostMapping({"/new"})
+        @Transactional
         public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest){
          System.out.println("In the create User controller method");
          User createUser = new User();
@@ -53,9 +59,18 @@ public class UserController {
          createUser.setUsername(registerRequest.getUsername());
          //each user starts with 10 pokeBalls
          createUser.setPokeBalls(10);
+         //creating a timer minus one day on new registration so user can collect poke ball on client side on init creation
+            Timer timer = new Timer();
+            LocalDate localDate = LocalDate.now();
+            LocalDate minusOneDay = localDate.minusDays(1);
+            Date currentDateMinusOneDay = java.sql.Date.valueOf(minusOneDay);
+            timer.setPrevDate(currentDateMinusOneDay);
+            timerService.saveTimer(timer);
 
-         userService.save(createUser);
-         return ResponseEntity.ok().build();
+            createUser.setTimer(timer);
+            userService.save(createUser);
+
+         return ResponseEntity.ok(createUser);
         }
 
         @PostMapping({"/login"})

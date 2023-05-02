@@ -1,9 +1,7 @@
 package com.poolstore.quickclean.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +19,7 @@ public class Timer extends BaseEntity {
 
     @Column(name="prevDate")
     private Date prevDate;
+
+    @OneToOne(mappedBy = "timer")
+    private User user;
 }

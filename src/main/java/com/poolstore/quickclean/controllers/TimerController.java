@@ -27,31 +27,50 @@ public class TimerController {
     }
 
     @PostMapping({"/{id}/updateTimer"})
+    @Transactional
     public ResponseEntity<Timer> updateTimer(
             @PathVariable Long id,
             @RequestParam("date") String stringDate
     )
     {
+        //Get User
+        Optional<User> optUser = userService.findUserById(id);
+        if(optUser.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        User user = optUser.get();
 
-        Optional<Timer> optTimer = timerService.getTimerById(id);
+        //Get Users Timer
+        Optional<Timer> optTimer = Optional.ofNullable(user.getTimer());
         if(optTimer.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-
         Timer timerExists = optTimer.get();
 
+        //Updating and saving timer
         Date newDate = Date.from(Instant.parse(stringDate));
         timerExists.setPrevDate(newDate);
         System.out.println(timerExists.getPrevDate());
-
         timerService.saveTimer(timerExists);
+
+        //setting user timer and saving
+        user.setTimer(timerExists);
+        userService.save(user);
+
         return ResponseEntity.ok(timerExists);
     }
 
     @GetMapping({"/{id}/getTimer"})
     public ResponseEntity<Timer> getTimer(@PathVariable Long id){
-        Optional<Timer> optTimer = timerService.getTimerById(id);
+        //getting User
+        Optional<User> optUser = userService.findUserById(id);
+        if(optUser.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        User user = optUser.get();
 
+        //getting users timer
+        Optional<Timer> optTimer = Optional.ofNullable(user.getTimer());
         if(optTimer.isEmpty()){
             return ResponseEntity.badRequest().build();
         }

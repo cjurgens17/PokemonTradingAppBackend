@@ -61,6 +61,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> inbox = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="timer_id", referencedColumnName = "id")
+    private Timer timer;
+
 
 
 
