@@ -22,11 +22,13 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
     private final PokemonRepository pokemonRepository;
+    private final TimerRepository timerRepository;
 
 
     public DataLoad(UserRepository userRepository, PokemonRepository pokemonRepository, TimerRepository timerRepository) {
         this.userRepository = userRepository;
         this.pokemonRepository = pokemonRepository;
+        this.timerRepository = timerRepository;
     }
 
 
@@ -41,6 +43,12 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
         timer.setPrevDate(localDateTime);
 
+        Timer timer2 = new Timer();
+        timer2.setId(2L);
+        LocalDateTime localDateTime2 = LocalDateTime.now().minusDays(1);
+        timer2.setPrevDate(localDateTime2);
+
+
         User john = new User();
         john.setFirstName("John");
         john.setLastName("Michaels");
@@ -51,7 +59,6 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         john.setUsername("john17");
         john.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6NaU4Ur8LgGKKc8KqSQoX1KhcMnKgxVYQA&usqp=CAU");
         john.setPokeBalls(500);
-        john.setTimer(timer);
         userRepository.save(john);
 
         Pokemon charizard = new Pokemon();
@@ -69,11 +76,15 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         mike.setUsername("mike17");
         mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
         mike.setPokeBalls(4);
-        mike.setTimer(timer);
         userRepository.save(mike);
         Pokemon poke = new Pokemon();
         poke.setName("butterfree");
         poke.setUser(mike);
         pokemonRepository.save(poke);
+
+        timer.setUser(john);
+        timer2.setUser(mike);
+        timerRepository.save(timer);
+        timerRepository.save(timer2);
     }
 }

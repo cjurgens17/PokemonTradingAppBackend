@@ -3,6 +3,7 @@ package com.poolstore.quickclean.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -62,8 +63,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> inbox = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="timer_id", referencedColumnName = "id")
-    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
     private Timer timer;
 }

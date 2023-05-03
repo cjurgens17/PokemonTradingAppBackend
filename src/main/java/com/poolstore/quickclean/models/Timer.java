@@ -1,6 +1,7 @@
 package com.poolstore.quickclean.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,8 @@ public class Timer extends BaseEntity {
     @Column(name="prevDate")
     private LocalDateTime prevDate;
 
-    @OneToOne(mappedBy = "timer")
-    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name="user_id")
+    @JsonBackReference
     private User user;
 }
