@@ -28,15 +28,14 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class UserController {
 
-    @Autowired
-    private EntityManager entityManager;
-
+    private final EntityManager entityManager;
     private final UserService userService;
     private final PokemonService pokemonService;
     private final MessageService messageService;
     private final TimerService timerService;
 
-    public UserController(UserService userService, PokemonService pokemonService, MessageService messageService, TimerService timerService) {
+    public UserController(EntityManager entityManager, UserService userService, PokemonService pokemonService, MessageService messageService, TimerService timerService) {
+        this.entityManager = entityManager;
         this.userService = userService;
         this.pokemonService = pokemonService;
         this.messageService = messageService;
@@ -56,12 +55,13 @@ public class UserController {
          createUser.setBirthDate(registerRequest.getBirthDate());
          createUser.setPassword(registerRequest.getPassword());
          createUser.setUsername(registerRequest.getUsername());
-         //each user starts with 10 pokeBalls
-         createUser.setPokeBalls(10);
+         //each user starts with 20 pokeBalls
+         createUser.setPokeBalls(20);
          //creating a timer minus one day on new registration so user can collect poke ball on client side on init creation
             Timer timer = new Timer();
             LocalDateTime localDate = LocalDateTime.now().minusDays(1);
             timer.setPrevDate(localDate);
+            timerService.saveTimer(timer);
             createUser.setTimer(timer);
             userService.save(createUser);
 

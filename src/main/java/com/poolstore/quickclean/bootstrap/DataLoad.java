@@ -48,7 +48,6 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         LocalDateTime localDateTime2 = LocalDateTime.now().minusDays(1);
         timer2.setPrevDate(localDateTime2);
 
-
         User john = new User();
         john.setFirstName("John");
         john.setLastName("Michaels");
