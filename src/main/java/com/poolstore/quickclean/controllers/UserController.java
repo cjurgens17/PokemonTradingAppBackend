@@ -19,8 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,12 +60,8 @@ public class UserController {
          createUser.setPokeBalls(10);
          //creating a timer minus one day on new registration so user can collect poke ball on client side on init creation
             Timer timer = new Timer();
-            LocalDate localDate = LocalDate.now();
-            LocalDate minusOneDay = localDate.minusDays(1);
-            Date currentDateMinusOneDay = java.sql.Date.valueOf(minusOneDay);
-            timer.setPrevDate(currentDateMinusOneDay);
-            timerService.saveTimer(timer);
-
+            LocalDateTime localDate = LocalDateTime.now().minusDays(1);
+            timer.setPrevDate(localDate);
             createUser.setTimer(timer);
             userService.save(createUser);
 

@@ -1,6 +1,7 @@
 package com.poolstore.quickclean.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -63,10 +64,6 @@ public class User extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="timer_id", referencedColumnName = "id")
+    @JsonBackReference
     private Timer timer;
-
-
-
-
-
 }

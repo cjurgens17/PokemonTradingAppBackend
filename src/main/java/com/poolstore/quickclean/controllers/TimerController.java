@@ -5,12 +5,13 @@ import com.poolstore.quickclean.models.Timer;
 import com.poolstore.quickclean.models.User;
 import com.poolstore.quickclean.services.TimerService;
 import com.poolstore.quickclean.services.UserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +31,8 @@ public class TimerController {
     @Transactional
     public ResponseEntity<Timer> updateTimer(
             @PathVariable Long id,
-            @RequestParam("date") String stringDate
+            @RequestParam("date")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String stringDate
     )
     {
         //Get User
@@ -48,9 +50,8 @@ public class TimerController {
         Timer timerExists = optTimer.get();
 
         //Updating and saving timer
-        Date newDate = Date.from(Instant.parse(stringDate));
+        LocalDateTime newDate = LocalDateTime.parse(stringDate, DateTimeFormatter.ISO_DATE_TIME);
         timerExists.setPrevDate(newDate);
-        System.out.println(timerExists.getPrevDate());
         timerService.saveTimer(timerExists);
 
         //setting user timer and saving

@@ -13,8 +13,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 
 @Component
@@ -22,30 +22,24 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
     private final PokemonRepository pokemonRepository;
-    private final TimerRepository timerRepository;
 
 
     public DataLoad(UserRepository userRepository, PokemonRepository pokemonRepository, TimerRepository timerRepository) {
         this.userRepository = userRepository;
         this.pokemonRepository = pokemonRepository;
-        this.timerRepository = timerRepository;
     }
 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        getPokemon();
         getUsers();
     }
     @Transactional
     private void getUsers(){
         Timer timer = new Timer();
         timer.setId(1L);
-        LocalDate localDate = LocalDate.now();
-        LocalDate minusOneDay = localDate.minusDays(1);
-        Date currentDateMinusOneDay = java.sql.Date.valueOf(minusOneDay);
-        timer.setPrevDate(currentDateMinusOneDay);
-        timerRepository.save(timer);
+        LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
+        timer.setPrevDate(localDateTime);
 
         User john = new User();
         john.setFirstName("John");
@@ -81,15 +75,5 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         poke.setName("butterfree");
         poke.setUser(mike);
         pokemonRepository.save(poke);
-    }
-    @Transactional
-    public void getPokemon(){
-
-        Pokemon pickachu = new Pokemon();
-        pickachu.setName("Pickachu");
-        pickachu.setId(1L);
-
-        pokemonRepository.save(pickachu);
-
     }
 }
