@@ -14,7 +14,6 @@ import com.poolstore.quickclean.services.PokemonService;
 import com.poolstore.quickclean.services.TimerService;
 import com.poolstore.quickclean.services.UserService;
 import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -50,11 +49,11 @@ public class UserController {
 
          createUser.setFirstName(registerRequest.getFirstName());
          createUser.setLastName(registerRequest.getLastName());
-         createUser.setPhoneNumber(registerRequest.getPhoneNumber());
          createUser.setEmail(registerRequest.getEmail());
          createUser.setBirthDate(registerRequest.getBirthDate());
          createUser.setPassword(registerRequest.getPassword());
          createUser.setUsername(registerRequest.getUsername());
+         createUser.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR82DN9JU-hbIhhkPR-AX8KiYzA4fBMVwjLAG82fz7GLg&s");
          //each user starts with 20 pokeBalls
          createUser.setPokeBalls(20);
          //creating a timer minus one day on new registration so user can collect poke ball on client side on init creation
@@ -349,5 +348,23 @@ public class UserController {
      userService.save(user);
 
      return ResponseEntity.ok(true);
+    }
+
+    @GetMapping({"/{email}/checkEmail"})
+    @Transactional
+    public ResponseEntity<Boolean> checkEmail(@PathVariable String email){
+        boolean emailExists  = userService.getUsers().stream()
+                .anyMatch(user -> user.getEmail().equals(email));
+
+        return ResponseEntity.ok(emailExists);
+    }
+
+    @GetMapping({"/{username}/checkUsername"})
+    @Transactional
+    public ResponseEntity<Boolean> checkUsername(@PathVariable String username){
+        boolean usernameExists = userService.getUsers().stream()
+                .anyMatch(user -> user.getUsername().equals(username));
+
+        return ResponseEntity.ok(usernameExists);
     }
 }

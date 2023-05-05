@@ -12,10 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class RegisterRequest {
 
-
     private String firstName;
     private String lastName;
-    private String phoneNumber;
     private String email;
     private Date birthDate;
     private String password;

@@ -70,7 +70,7 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         mike.setLastName("Myers");
         mike.setAdmin(true);
         mike.setId(2L);
-        mike.setEmail("Mike@example.com");
+        mike.setEmail("Mike17@example.com");
         mike.setPassword("password");
         mike.setUsername("mike17");
         mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsE7YhmsSgX1GkJCoCzOjbx7n2Je6w7dlwew&usqp=CAU");
