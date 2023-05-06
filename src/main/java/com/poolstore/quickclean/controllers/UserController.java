@@ -80,6 +80,23 @@ public class UserController {
             return ResponseEntity.ok(user.get());
         }
 
+        @PostMapping({"/checkCredentials"})
+        @Transactional
+        public ResponseEntity<Boolean> checkCredentials(@RequestBody LoginRequest loginRequest){
+        //if user does not exist return false
+        Optional<User> optUser = userService.findByCredentials(loginRequest.getUsername());
+        if(optUser.isEmpty()){
+            return ResponseEntity.ok(false);
+        }
+        //if passwords dont match return false
+        User userExist = optUser.get();
+        if(!userExist.getPassword().equals(loginRequest.getPassword())){
+            return ResponseEntity.ok(false);
+        }
+        //user and password are a match
+        return ResponseEntity.ok(true);
+        }
+
         @GetMapping({"/{id}/userPokemon"})
         public ResponseEntity<List<Pokemon>> getUserPokemon(@PathVariable Long id){
 
