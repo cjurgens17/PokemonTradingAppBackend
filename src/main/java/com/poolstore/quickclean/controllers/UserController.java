@@ -60,9 +60,9 @@ public class UserController {
             Timer timer = new Timer();
             LocalDateTime localDate = LocalDateTime.now().minusDays(1);
             timer.setPrevDate(localDate);
-            timerService.saveTimer(timer);
-            createUser.setTimer(timer);
             userService.save(createUser);
+            timer.setUser(createUser);
+            timerService.saveTimer(timer);
 
          return ResponseEntity.ok(createUser);
         }
