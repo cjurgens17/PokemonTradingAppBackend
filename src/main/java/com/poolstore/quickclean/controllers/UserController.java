@@ -294,7 +294,7 @@ public class UserController {
 
     @PostMapping({"/tradePokemon"})
     @Transactional
-    public ResponseEntity<Boolean> tradePokemon(@RequestBody Trade trade){
+    public ResponseEntity<List<Pokemon>> tradePokemon(@RequestBody Trade trade){
 
         Trade dataTrade = new Trade();
         dataTrade.setUsername(trade.getUsername());
@@ -345,7 +345,11 @@ public class UserController {
             }
         }
 
-        return ResponseEntity.ok(trade1 && trade2);
+        if(trade1 && trade2){
+            return ResponseEntity.ok(tradeUser2Pokemon);
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
     @PostMapping({"/{id}/updateProfilePicture"})
     @Transactional
