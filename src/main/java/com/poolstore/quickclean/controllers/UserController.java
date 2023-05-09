@@ -69,8 +69,8 @@ public class UserController {
             Message message = new Message();
             message.setText("Welcome to our Pokemon Trading App!" +
                     " We're thrilled to have you join our community of trainers and collectors." +
-                    " Here, you can trade, message, and sell your favorite Pokemon with fellow enthusiasts" +
-                    " from all over the world. Thank you for joining us and we look forward to seeing" +
+                    " Here, you can trade, message, and collect your favorite Pokemon with fellow enthusiasts" +
+                    " from all over the world. Below you will find an example of the trading system. Thank you for joining us and we look forward to seeing" +
                     " your collection grow!");
             message.setUserPokemon("Umbreon Example");
             message.setTradePokemon("Vileplume Example");
