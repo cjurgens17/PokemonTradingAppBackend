@@ -56,6 +56,7 @@ public class UserController {
          createUser.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR82DN9JU-hbIhhkPR-AX8KiYzA4fBMVwjLAG82fz7GLg&s");
          //each user starts with 20 pokeBalls
          createUser.setPokeBalls(20);
+
          //creating a timer minus one day on new registration so user can collect poke ball on client side on init creation
             Timer timer = new Timer();
             LocalDateTime localDate = LocalDateTime.now().minusDays(1);
@@ -63,6 +64,22 @@ public class UserController {
             userService.save(createUser);
             timer.setUser(createUser);
             timerService.saveTimer(timer);
+
+            //Adding a welcome message when creating a new user
+            Message message = new Message();
+            message.setText("Welcome to our Pokemon Trading App!" +
+                    " We're thrilled to have you join our community of trainers and collectors." +
+                    " Here, you can trade, message, and sell your favorite Pokemon with fellow enthusiasts" +
+                    " from all over the world. Thank you for joining us and we look forward to seeing" +
+                    " your collection grow!");
+            message.setUserPokemon("Umbreon Example");
+            message.setTradePokemon("Vileplume Example");
+            message.setUserPokemonImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS--yrrnAfZUHMSYNkzIbskqJNBn7weqJOqoSPsAGQgJAYJFzghSvnBWTmPBIiBjTThCtE&usqp=CAU");
+            message.setTradePokemonImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMWK3q3UDNpy3aK7TvWBfbzzgGrEzRh7LiJQ&usqp=CAU");
+            message.setTraded(true);
+            message.setCurrentUsername("The Pokemon Trading Team");
+            message.setUser(createUser);
+            messageService.save(message);
 
          return ResponseEntity.ok(createUser);
         }
