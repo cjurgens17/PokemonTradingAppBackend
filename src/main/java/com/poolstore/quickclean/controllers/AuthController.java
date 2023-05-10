@@ -7,12 +7,14 @@ import com.poolstore.quickclean.services.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping({"auth"})
 @CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
 public class AuthController {
+
 
     private final AuthService authService;
 

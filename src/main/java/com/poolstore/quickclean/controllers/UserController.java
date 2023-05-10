@@ -44,7 +44,6 @@ public class UserController {
         @PostMapping({"/new"})
         @Transactional
         public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest){
-         System.out.println("In the create User controller method");
          User createUser = new User();
 
          createUser.setFirstName(registerRequest.getFirstName());
@@ -87,9 +86,6 @@ public class UserController {
         @PostMapping({"/login"})
         public ResponseEntity<User> userLogin(@RequestBody LoginRequest loginRequest){
             Optional<User> user = userService.findByCredentials(loginRequest.getUsername(), loginRequest.getPassword());
-            System.out.println("Username: " + loginRequest.getUsername());
-            System.out.println("password: " + loginRequest.getPassword());
-
             if(user.isEmpty()){
                 return ResponseEntity.badRequest().build();
             }
@@ -187,7 +183,6 @@ public class UserController {
             }
 
             User user1 = user.get();
-            System.out.println("in get user info controller method");
 
             return ResponseEntity.ok(user1);
         }
@@ -201,7 +196,6 @@ public class UserController {
             }
 
             User user1 = user.get();
-            System.out.println("In the get by Username method");
 
             return ResponseEntity.ok(user1);
         }
@@ -222,7 +216,6 @@ public class UserController {
                 @RequestBody Message message
         )
         {
-            System.out.println("In add message UserController");
             Optional<User> updateUser = userService.findByCredentials(username);
             User user;
             if(updateUser.isPresent()){
@@ -245,15 +238,12 @@ public class UserController {
             newMessage.setUser(user);
             messageService.save(newMessage);
 
-            System.out.println(newMessage);
-
             return ResponseEntity.ok(user);
 
         }
 
         @DeleteMapping({"/deleteMessage"})
         public ResponseEntity<Boolean> deleteMessage(@RequestBody Message sentMessage){
-            System.out.println("in the delete Message service   message ID: " + sentMessage.getId());
             Optional<Message> optMessage = messageService.findMessageById(sentMessage.getId());
 
             if(optMessage.isEmpty()){
@@ -266,6 +256,7 @@ public class UserController {
             return ResponseEntity.ok(true);
         }
 
+        //This may be more suitable for Request params, possibly refactor in the future
         @GetMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
         public ResponseEntity<Boolean> checkUsersPokemon(
                 @PathVariable String username,

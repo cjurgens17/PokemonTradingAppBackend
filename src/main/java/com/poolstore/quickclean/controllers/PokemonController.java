@@ -27,8 +27,6 @@ public class PokemonController {
     @PostMapping({"addPokemon"})
     public ResponseEntity<Pokemon> addPokemon(@RequestBody Pokemon pokemon){
 
-        System.out.println("In add pokemon method for user controller");
-
         Pokemon poke = new Pokemon();
         poke.setName(pokemon.getName());
         poke.setWeight(pokemon.getWeight());
@@ -49,7 +47,6 @@ public class PokemonController {
             @RequestBody Pokemon pokemon
     )
     {
-        System.out.println("In the addPokemon method in the UserController");
         Optional<User> updateUser = userService.findUserById(id);
         User user;
         if (updateUser.isPresent()) {
@@ -66,7 +63,6 @@ public class PokemonController {
         newPoke.setIndex(pokemon.getIndex());
         newPoke.setUser(user);
         newPoke.setWeight(pokemon.getWeight());
-        System.out.println("pokemon: " + newPoke);
         pokemonService.savePokemon(newPoke);
 
         return ResponseEntity.ok(newPoke);
