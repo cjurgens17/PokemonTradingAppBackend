@@ -60,7 +60,7 @@ public class UserController {
             Timer timer = new Timer();
             LocalDateTime localDate = LocalDateTime.now().minusDays(1);
             timer.setPrevDate(localDate);
-            userService.save(createUser);
+            User savedUser = userService.save(createUser);
             timer.setUser(createUser);
             timerService.saveTimer(timer);
 
@@ -80,7 +80,7 @@ public class UserController {
             message.setUser(createUser);
             messageService.save(message);
 
-         return ResponseEntity.ok(createUser);
+         return ResponseEntity.ok(savedUser);
         }
 
         @PostMapping({"/login"})

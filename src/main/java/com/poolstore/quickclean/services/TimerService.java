@@ -18,8 +18,8 @@ public class TimerService {
         this.timerRepository = timerRepository;
     }
 
-    public void saveTimer(Timer timer){
-        timerRepository.save(timer);
+    public Timer saveTimer(Timer timer){
+       return timerRepository.save(timer);
     }
 
     public Optional<Timer> getTimerById(Long id){

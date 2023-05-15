@@ -22,8 +22,8 @@ public class UserService {
         return userRepository.findByUsernameAndPassword(username,password);
     }
 
-    public void save(User user){
-        userRepository.save(user);
+    public User save(User user){
+        return userRepository.save(user);
     }
 
     public Optional<User> findUserById(Long id){
