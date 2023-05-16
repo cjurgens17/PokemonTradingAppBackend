@@ -168,9 +168,9 @@ public class UserController {
             updateIsTrade.setUserPokemonImage(message.getUserPokemonImage());
             updateIsTrade.setUser(setMsgUser);
             updateIsTrade.setUsername(message.getUsername());
-            messageService.save(updateIsTrade);
+            Message savedMessage = messageService.save(updateIsTrade);
 
-            return ResponseEntity.ok(updateIsTrade);
+            return ResponseEntity.ok(savedMessage);
         }
 
         @GetMapping({"/{id}/userInfo"})
@@ -232,9 +232,7 @@ public class UserController {
             newMessage.setTradePokemonImage(message.getTradePokemonImage());
             newMessage.setUserPokemonImage(message.getUserPokemonImage());
             newMessage.setCurrentUsername(message.getCurrentUsername());
-            System.out.println(message.isTraded());
             newMessage.setTraded(message.isTraded());
-            System.out.println(newMessage.isTraded());
             newMessage.setUser(user);
             messageService.save(newMessage);
 
@@ -256,7 +254,6 @@ public class UserController {
             return ResponseEntity.ok(true);
         }
 
-        //This may be more suitable for Request params, possibly refactor in the future
         @GetMapping({"/{username}/{currentUsername}/{userPokemon}/{tradePokemon}/checkPokemon"})
         public ResponseEntity<Boolean> checkUsersPokemon(
                 @PathVariable String username,
@@ -296,8 +293,11 @@ public class UserController {
                 }
             }
 
+            if(!checkUser1 || !checkUser2){
+                return ResponseEntity.badRequest().build();
+            }
 
-           return ResponseEntity.ok(checkUser1 && checkUser2);
+           return ResponseEntity.ok(true);
     }
 
     @PostMapping({"/tradePokemon"})

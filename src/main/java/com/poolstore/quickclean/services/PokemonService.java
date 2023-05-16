@@ -19,8 +19,8 @@ public class PokemonService {
         this.pokemonRepository = pokemonRepository;
     }
 
-    public void savePokemon(Pokemon pokemon){
-        pokemonRepository.save(pokemon);
+    public Pokemon savePokemon(Pokemon pokemon){
+       return pokemonRepository.save(pokemon);
     }
 
     public List<Pokemon> getUserPokemon(User user){
