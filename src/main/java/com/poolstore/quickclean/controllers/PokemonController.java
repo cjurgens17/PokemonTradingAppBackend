@@ -27,6 +27,10 @@ public class PokemonController {
     @PostMapping({"addPokemon"})
     public ResponseEntity<Pokemon> addPokemon(@RequestBody Pokemon pokemon){
 
+        if(pokemon == null){
+            return ResponseEntity.badRequest().build();
+        }
+
         Pokemon poke = new Pokemon();
         poke.setName(pokemon.getName());
         poke.setWeight(pokemon.getWeight());
@@ -37,8 +41,8 @@ public class PokemonController {
         poke.setImage(pokemon.getImage());
         poke.setBackImage(pokemon.getBackImage());
 
-        pokemonService.savePokemon(poke);
-        return ResponseEntity.ok().build();
+        Pokemon savedPokemon = pokemonService.savePokemon(poke);
+        return ResponseEntity.ok(savedPokemon);
     }
 
     @PostMapping({"/{id}/addPokemon"})
@@ -63,8 +67,8 @@ public class PokemonController {
         newPoke.setIndex(pokemon.getIndex());
         newPoke.setUser(user);
         newPoke.setWeight(pokemon.getWeight());
-        pokemonService.savePokemon(newPoke);
+        Pokemon savedPokemon = pokemonService.savePokemon(newPoke);
 
-        return ResponseEntity.ok(newPoke);
+        return ResponseEntity.ok(savedPokemon);
     }
 }

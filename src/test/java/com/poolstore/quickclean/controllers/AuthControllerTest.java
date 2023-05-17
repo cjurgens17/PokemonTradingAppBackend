@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class AuthControllerTest{
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @InjectMocks
     private AuthController authController;

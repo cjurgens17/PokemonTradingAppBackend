@@ -24,8 +24,11 @@ public class MessageService {
     }
 
     public List<Message> getUserMessages(User user){
-
         List<Message> inbox = new ArrayList<>();
+
+        if(user == null){
+            return inbox;
+        }
 
         messageRepository.findAll().forEach(message -> {
             if(message.getUser() == null){

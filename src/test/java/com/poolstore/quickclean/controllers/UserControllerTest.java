@@ -55,7 +55,7 @@ public class UserControllerTest {
     private UserController userController;
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
 
     @BeforeEach
