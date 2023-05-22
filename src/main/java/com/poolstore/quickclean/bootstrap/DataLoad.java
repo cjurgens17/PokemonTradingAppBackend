@@ -47,11 +47,6 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
         timer.setPrevDate(localDateTime);
 
-        Timer timer2 = new Timer();
-        timer2.setId(2L);
-        LocalDateTime localDateTime2 = LocalDateTime.now().minusDays(1);
-        timer2.setPrevDate(localDateTime2);
-
         User john = new User();
         john.setFirstName("Guest");
         john.setLastName("Doe");
@@ -91,18 +86,6 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         charizard.setUser(john);
         pokemonRepository.save(charizard);
 
-        User mike = new User();
-        mike.setFirstName("Mike");
-        mike.setLastName("Myers");
-        mike.setAdmin(true);
-        mike.setId(2L);
-        mike.setEmail("Mike17@example.com");
-        mike.setPassword("password");
-        mike.setUsername("mike17");
-        mike.setProfilePicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKaHnive_AZlTROwK4iN_dO4sZg7EMD4mx8g7whZueNHTHw8sFm_zQzGjJhvutiSiyOU&usqp=CAU");
-        mike.setPokeBalls(4);
-        userRepository.save(mike);
-
         Pokemon butterfree = new Pokemon();
         butterfree.setName("Butterfree");
         butterfree.setWeight(320);
@@ -126,9 +109,8 @@ public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
         pokemonRepository.save(mewtwo);
 
         timer.setUser(john);
-        timer2.setUser(mike);
         timerRepository.save(timer);
-        timerRepository.save(timer2);
+
 
     }
 }
