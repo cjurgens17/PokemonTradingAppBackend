@@ -69,7 +69,7 @@ public class UserController {
             message.setText("Welcome to our Pokemon Trading App!" +
                     " We're thrilled to have you join our community of trainers and collectors." +
                     " Here, you can trade, message, and collect your favorite Pokemon with fellow enthusiasts" +
-                    " from all over the world. Below you will find an example of the trading system. Thank you for joining us and we look forward to seeing" +
+                    " from all over the world. Below you will find an example of the trading system. We have also supplied you with a free Charizard. Thank you for joining us and we look forward to seeing" +
                     " your collection grow!");
             message.setUserPokemon("Umbreon Example");
             message.setTradePokemon("Vileplume Example");
@@ -79,6 +79,16 @@ public class UserController {
             message.setCurrentUsername("The Pokemon Trading Team");
             message.setUser(createUser);
             messageService.save(message);
+
+            Pokemon charizard = new Pokemon();
+            charizard.setName("Charizard");
+            charizard.setWeight(905);
+            charizard.setIndex(6);
+            charizard.setAbilities(List.of("blaze", "solar-power"));
+            charizard.setImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6.png");
+            charizard.setBackImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png");
+            charizard.setUser(createUser);
+            pokemonService.savePokemon(charizard);
 
          return ResponseEntity.ok(savedUser);
         }
