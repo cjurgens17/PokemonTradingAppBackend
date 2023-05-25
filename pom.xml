@@ -8,12 +8,12 @@
 		<version>3.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.poolstore</groupId>
-	<artifactId>quickclean</artifactId>
+	<groupId>com.pokemontrading</groupId>
+	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>quickclean</name>
-	<description>Ecommerce pool store</description>
+	<name>pokemon trading backend</name>
+	<description>Pokemon Trading Backend</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

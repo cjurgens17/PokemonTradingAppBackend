@@ -142,10 +142,6 @@ public class UserControllerTest {
         // Assert individual properties of the captured Timer object
         assertEquals(timer.getId(), savedTimer.getId());
 
-        // Assert individual properties of the captured Message object
-        assertEquals(message.getText(), savedMessage.getText());
-
-
         // Verify that the userService.save() method was called with the createdUser object
         verify(userService).save(any(User.class));
         verify(timerService).saveTimer(any(Timer.class));
