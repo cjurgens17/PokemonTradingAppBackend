@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"user"})
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
+@CrossOrigin(origins = {"https://pokemon-trading.herokuapp.com"}, allowCredentials = "true")
 public class UserController {
 
     private final EntityManager entityManager;

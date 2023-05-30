@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"auth"})
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
+@CrossOrigin(origins = {"https://pokemon-trading.herokuapp.com"}, allowCredentials = "true")
 public class AuthController {
 
 
