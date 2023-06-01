@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="pokemon_users")
+@Table(name="pokemon")
 public class Pokemon extends BaseEntity {
 
     @Column(name="name")
