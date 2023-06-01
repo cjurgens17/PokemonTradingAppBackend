@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "pokemon_users")
+@Table(name = "\"User\"")
 public class User extends BaseEntity {
 
     @Column(name="first_name")
