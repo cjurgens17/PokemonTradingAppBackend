@@ -9,6 +9,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
-
-
 }

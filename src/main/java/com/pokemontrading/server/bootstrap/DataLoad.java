@@ -19,6 +19,7 @@
 //import java.util.List;
 //
 //
+//THIS WAS FOR LOCAL BUILD TESTING
 //@Component
 //public class DataLoad implements ApplicationListener<ContextRefreshedEvent> {
 //

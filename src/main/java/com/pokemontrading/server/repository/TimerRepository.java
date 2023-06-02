@@ -9,5 +9,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface TimerRepository extends JpaRepository<Timer, Long> {
-
 }
