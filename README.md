@@ -2,7 +2,8 @@
 
 ## Introduction
 
-The Pokemon API project is a custom backend server and API developed using Java and the Spring framework. It provides a platform for interacting with Pokemon data and serves as the backend for a custom client-side application built with Angular.
+The Pokemon API project is a custom backend server and API developed using Java and the Spring framework. It provides a platform for interacting with Pokemon data and serves as the backend for a custom client-side application built with Angular. 
+The repository link for the client-side application is here [https://github.com/cjurgens17/PokemonTradingApp]
 
 ## Technologies Used
 
