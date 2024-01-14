@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"timer"})
-@CrossOrigin(origins = {"https://pokemon-trading.herokuapp.com"}, allowCredentials = "true")
+@CrossOrigin(origins = {"https://pokemon-trading-app.vercel.app"}, allowCredentials = "true")
 public class TimerController {
 
     private final TimerService timerService;
