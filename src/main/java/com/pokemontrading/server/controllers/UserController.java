@@ -27,7 +27,7 @@ import java.util.Optional;
 @CrossOrigin(origins = {"https://pokemon-trading-app.vercel.app"},
         allowCredentials = "true",
         methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST},
-        allowedHeaders = {"Origin", "Content-Type"})
+        allowedHeaders = {"*"})
 public class UserController {
 
     private final EntityManager entityManager;
