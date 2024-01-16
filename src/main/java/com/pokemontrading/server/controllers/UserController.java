@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping({"user"})
-@CrossOrigin(origins = {"https://pokemon-trading-app.vercel.app"}, allowCredentials = "true")
+@CrossOrigin(origins = {"https://pokemon-trading-app.vercel.app"})
 public class UserController {
 
     private final EntityManager entityManager;
